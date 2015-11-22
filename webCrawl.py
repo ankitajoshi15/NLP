@@ -18,8 +18,13 @@ text = soup.getText()
 #ntext = "".join(text.split(r'\s+')
 
 e = re.sub(r"\s+", " ", text)
-print(e)
+#print(e)
 
+#ne=re.compile("[\W\d]+")
+#nee = re.sub("_","abcd1234!@#$")
+ne=re.sub(r'[^A-Za-z0-9]+', r'',e)
+#ne = re.sub("[\W\d]+", "", e.strip())
+print(ne)
 #print nltk.clean_html(f.read())
 
 
