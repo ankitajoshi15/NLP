@@ -5,11 +5,11 @@ import urllib2
 import re
 from bs4 import BeautifulSoup
 import string
-#soup = BeautifulSoup("https://mr.wikipedia.org/s/2cv")
-#text = soup.getText()
-#print(text)
+import unicodedata
 
-f = urllib2.urlopen("https://mr.wikipedia.org/s/2cv")
+f2 = urllib2.urlopen("https://mr.wikipedia.org/s/2cv").read().decode("utf-8-sig")
+regex = re.compile(ur"[^\u0900-\u097F]+")
+f = regex.sub("foo", f2)
 
 soup = BeautifulSoup(f)
 text = soup.getText()
