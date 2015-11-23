@@ -27,8 +27,12 @@ text = soup.getText()
 #punctutationMarks = re.compile(r'[?|$|.|!|(|)|%|#|}|{|.|;|,]')
 #clean = re.sub(r"['_,!\-\"\\\/}{?\()%$*;\[\]:><|=@#+]",'',removedEnglish).strip()
 
+
+#deal with periods.
+period = re.compile(r'[.]')
+sentences = re.sub(r"[.]+",".",text).strip()
+
 regex = re.compile(ur"[^\u0900-\u097F.]+")
-clean = regex.sub("", text)
-cleanest = clean.replaceAll("\\.{1,}", ".")
-print(cleanest)
+clean = regex.sub("", sentences)
+print(clean)
 
