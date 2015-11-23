@@ -4,7 +4,7 @@ import nltk
 import urllib2
 import re
 from bs4 import BeautifulSoup
-
+import string
 #soup = BeautifulSoup("https://mr.wikipedia.org/s/2cv")
 #text = soup.getText()
 #print(text)
@@ -13,18 +13,24 @@ f = urllib2.urlopen("https://mr.wikipedia.org/s/2cv")
 
 soup = BeautifulSoup(f)
 text = soup.getText()
-#text = re.sub(r"\s+", "", text, flags=re.UNICODE)
-#text = text.lstrip().rstrip()
-#ntext = "".join(text.split(r'\s+')
 
-e = re.sub(r"\s+", " ", text)
-#print(e)
+#remove extra spaces
+removedSpaces = re.sub(r"\s+", " ", text)
 
-#ne=re.compile("[\W\d]+")
-#nee = re.sub("_","abcd1234!@#$")
-ne=re.sub(r'[^A-Za-z0-9]+', r'',e)
-#ne = re.sub("[\W\d]+", "", e.strip())
-print(ne)
-#print nltk.clean_html(f.read())
+#remove ascii characters
 
+_ascii_letters = re.compile(r'[a-zA-Z0-9]', flags=re.UNICODE)
+removedEnglish = _ascii_letters.sub("", removedSpaces)
+
+
+#remove the punctuation marks like "?,!,/,\,(,)
+
+#punctutationMarks = re.compile(r'[?|$|.|!|(|)|%|#|}|{|.|;|,]')
+#devnagri = re.compile([\u0900-\u097F],re.UNICODE)
+
+
+
+clean = re.sub(r"['_,!\-\"\\\/}{?\.()%$*;\[\]:><|=@#]",'',removedEnglish).strip()
+
+print(clean)
 
