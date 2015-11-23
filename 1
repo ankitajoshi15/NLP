@@ -27,8 +27,8 @@ text = soup.getText()
 #punctutationMarks = re.compile(r'[?|$|.|!|(|)|%|#|}|{|.|;|,]')
 #clean = re.sub(r"['_,!\-\"\\\/}{?\()%$*;\[\]:><|=@#+]",'',removedEnglish).strip()
 
-regex = re.compile(ur"[^\u0900-\u097F.]+")
-clean = regex.sub("", text)
-cleanest = clean.replaceAll("\\.{1,}", ".")
+regex = re.compile(ur"[^\u002E-\u097F]+")
+cleanest = regex.sub("", text)
+
 print(cleanest)
 
