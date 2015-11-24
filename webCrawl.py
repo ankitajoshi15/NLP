@@ -11,13 +11,16 @@ from bs4 import SoupStrainer
 #text = soup.getText()
 #print(text)
 
-f = urllib2.urlopen("https://mr.wikipedia.org/s/2cv")
+#f = urllib2.urlopen("https://mr.wikipedia.org/")
+
+with open("h.txt") as f:
+    for line in f:
+        htmlFile = urllib2.urlopen(line)
+
+	soup = BeautifulSoup(htmlFile)
 
 
-soup = BeautifulSoup(f)
-
-
-text = soup.getText()
+	text = soup.getText()
 
 #removedSpaces = re.sub(r"\s+", " ", text)
 #remove ascii characters
@@ -27,12 +30,16 @@ text = soup.getText()
 #punctutationMarks = re.compile(r'[?|$|.|!|(|)|%|#|}|{|.|;|,]')
 #clean = re.sub(r"['_,!\-\"\\\/}{?\()%$*;\[\]:><|=@#+]",'',removedEnglish).strip()
 
+	regex = re.compile(ur"[^\u0900-\u097F.]+")
+	clean = regex.sub("", text)
 
-#deal with periods.
-period = re.compile(r'[.]')
-sentences = re.sub(r"[.]+",".",text).strip()
+	with codecs.open('hindi.txt', 'a', encoding='utf-8') as out:  
+	    	out.write(clean)
+		out.close
+	print(line)
 
-regex = re.compile(ur"[^\u0900-\u097F.]+")
-clean = regex.sub("", sentences)
-print(clean)
+f.close
+
+
+#print(clean)
 
