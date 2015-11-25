@@ -1,7 +1,7 @@
 import codecs
 from chardet import detect
 
-f = open('hindi.txt','r')    
+f = open('marathi.txt','r')    
 for line in f:
 
 	#decode the input
@@ -11,9 +11,9 @@ for line in f:
 		if not s=="":		
 			print s.decode('utf-8')
 			str1 = ''.join(s)
-			value = 'hindi,' + str1 + '\n'
+			value = str1 + ',marathi' + '\n'
 			print(value)
-			with codecs.open('hlabel.txt', 'a', encoding='utf-8') as out:
+			with codecs.open('nmlabel.txt', 'a', encoding='utf-8') as out:
 				s1 = value.decode('utf-8')
                 		out.write(s1)
                 		out.close
