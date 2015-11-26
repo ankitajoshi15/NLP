@@ -1,11 +1,12 @@
-from nltk.util import ngrams
-from nltk import NaiveBayesClassifier as nbc
+import weka.core.jvm as jvm
+from weka.core.converters import Loader
 
 
-hindi = "".join(open('hlabel.txt','r'))
-marathi = "".join(open('mlabel.txt','r'))
+jvm.start()
 
-#print hindi
+loader = Loader(classname="weka.core.converters.ArffLoader")
+data = loader.load_file("mlabel.txt")
+data.class_is_last()
 
-print ngrams(hindi[:10], 2)
+print(data)
 
