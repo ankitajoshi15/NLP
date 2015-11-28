@@ -8,7 +8,7 @@ import string
 from bs4 import SoupStrainer
 
 regex = re.compile(ur"[^\u0900-\u097F\s]+")
-with open("hindiulrs.txt") as f:
+with open("hindiurls.txt") as f:
     for line in f:
         htmlFile = urllib2.urlopen(line)
 
@@ -26,7 +26,7 @@ with open("hindiulrs.txt") as f:
 	for i in y:
                 clean1 = regex.sub("", i)
                 if not clean1 == "" and not clean1.isspace():
-                        with codecs.open('please_work.txt', 'a', encoding='utf-8') as out:
+                        with codecs.open('hindi.txt', 'a', encoding='utf-8') as out:
                                 out.write(re.sub("\s+"," ",clean1) +'\n')
 #                                print clean1.encode('utf-8')
                                 out.close

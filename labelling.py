@@ -1,21 +1,22 @@
+# -*- coding: utf-8 -*-
 import codecs
 from chardet import detect
 
-f = open('marathi.txt','r')    
+f = open('hindi.txt','r')    
 for line in f:
 
 	#decode the input
 	l = unicode(line, encoding='utf-8')# decode the input                                                                                  
-    	some = line.split(".")
-	for s in some:
+#    	some = line.split(".")
+	for s in l:
 		if not s=="":		
-			print s.decode('utf-8')
+			print s.encode('utf-8')
 			str1 = ''.join(s)
-			value = str1 + ',marathi' + '\n'
+			value = str1 + ',hindi' + '\n'
 			print(value)
-			with codecs.open('nmlabel.txt', 'a', encoding='utf-8') as out:
-				s1 = value.decode('utf-8')
-                		out.write(s1)
+			with codecs.open('hindilabel.txt', 'a', encoding='utf-8') as out:
+				#s1 = value.decode('utf-8')
+                		out.write(value)
                 		out.close
 			
 			#answer = str1.join('marathi')
