@@ -1,0 +1,19 @@
+import codecs
+from textblob.classifiers import NaiveBayesClassifier
+
+
+
+with codecs.open("train.txt" , 'r') as out:
+	
+	train = out
+		
+print(train)
+#cl = NaiveBayesClassifier(train)
+
+
+'''
+with codecs.open("predict.txt",'r') as out:
+	for line in out:
+		cl.classify(line)
+
+'''

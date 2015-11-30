@@ -114,6 +114,7 @@ scores["marathi"] = 0.0
 scores["hindi"] = 0.0
 
 for l in labels:
+	flag = 0
 	logSum = 0.0
 	for w in checkwords:
 		stemTotalCount = 0.0
@@ -130,12 +131,15 @@ for l in labels:
 		if flag is 1:
 			continue
 		else:
-			wordProbability = stemTotalCount / Documents[l]
-		#	print wordProbability ,"  ",stemTotalCount, " " , Documents["hindi"] , " ", stemTotalCount / Documents["hindi"]
+			if l == "marathi":
+				wordProbability = stemTotalCount2 / Documents[l]
+			else:
+				wordProbability = stemTotalCount1 / Documents[l]
 			if l == "marathi":
 				wordInverseProbability = stemTotalCount1 / InverseDocuments[l]
 			else:
 				wordInverseProbability = stemTotalCount2 / InverseDocuments[l]
+			
 			wordicity = wordProbability / (wordProbability + wordInverseProbability)
 			wordicity = ( (1.0 * 0.5) + (stemTotalCount * wordicity) ) / ( 1.0 + stemTotalCount )
 			
@@ -146,7 +150,6 @@ for l in labels:
 					wordicity = 0.99
 			logSum += (math.log(1.0-wordicity) - math.log(wordicity))
 
-#	print logSum
 	scores[l] = 1.0 / ( 1.0 + math.exp(logSum) )
 
 for l in scores:
