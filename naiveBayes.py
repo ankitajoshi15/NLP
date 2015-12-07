@@ -87,10 +87,11 @@ with codecs.open('mwordcount.txt' , 'r') as out:
 
 
 #calculating the probabilites for words
-
+'''
 with codecs.open('predict.txt','r') as out:
 	for line in out:
 		checkwords = line.split(" ")
+'''
 '''
 for w in checkwords:
 	print w
@@ -99,7 +100,7 @@ for w in checkwords:
 	else:
 		print "not present"
 
-
+	
 for w in checkwords:
         print w
         if w in mword_count.keys():
@@ -110,8 +111,13 @@ for w in checkwords:
 '''
 
 
-scores["marathi"] = 0.0
-scores["hindi"] = 0.0
+'''
+
+with codecs.open('predict.txt','r') as out:
+        for line in out:
+                checkwords = line.split(" ")
+		scores["marathi"] = 0.0
+		scores["hindi"] = 0.0
 
 for l in labels:
 	flag = 0
@@ -154,5 +160,75 @@ for l in labels:
 
 for l in scores:
 	print l,scores[l]
+'''
 
 
+
+def predict():
+
+	number_of_lines = 0
+	accuracy = 0
+	with codecs.open('predict1.txt','r') as out:
+		for line in out:
+			print line
+			scores = check(line)
+			number_of_lines += 1
+			#print scores["marathi"]
+				#accuracy +=1
+	#print accuracy
+                
+
+
+
+
+
+
+def check(line):
+
+	checkwords = line.split(" ")
+	scores["marathi"] = 0.0
+	scores["hindi"] = 0.0
+
+	for l in labels: 
+		flag = 0
+		logSum = 0.0
+		for w in checkwords:
+			stemTotalCount = 0.0
+			stemTotalCount1 = 0.0
+			stemTotalCount2 = 0.0
+			if w in hword_count.keys():
+				stemTotalCount1 = float(hword_count[w])
+			if w in mword_count.keys():
+				stemTotalCount2 = stemTotalCount + float(mword_count[w])
+			if w not in hword_count.keys() and w not in mword_count.keys():
+				flag = 1
+				stemTotalCount = 0.0
+			stemTotalCount = stemTotalCount1 + stemTotalCount2
+			if flag is 1:
+				continue
+			else:
+				if l == "marathi":
+					wordProbability = stemTotalCount2 / Documents[l]
+				else:
+					wordProbability = stemTotalCount1 / Documents[l]
+				if l == "marathi":
+					wordInverseProbability = stemTotalCount1 / InverseDocuments[l]
+				else:
+					wordInverseProbability = stemTotalCount2 / InverseDocuments[l]
+
+				wordicity = wordProbability / (wordProbability + wordInverseProbability)
+				wordicity = ( (1.0 * 0.5) + (stemTotalCount * wordicity) ) / ( 1.0 + stemTotalCount )
+
+				if wordicity is 0.0:
+					wordicity = 0.01
+				else:
+					if wordicity is 1.0:
+					        wordicity = 0.99
+				logSum += (math.log(1.0-wordicity) - math.log(wordicity))
+
+		scores[l] = 1.0 / ( 1.0 + math.exp(logSum) )
+		print l , " ",  scores[l]
+	return scores
+
+
+predict()
